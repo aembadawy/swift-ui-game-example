@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var isAlertVisiable: Bool = false
     @State private var sliderValue: Float = 50.0
+    @State private var game: Game = Game()
+    
     var body: some View {
         VStack {
             Text("🎯🎯🎯")
@@ -20,7 +22,7 @@ struct ContentView: View {
                 .font(.footnote)
                 .kerning(2.0)
             
-            Text("89")
+            Text(String(game.target))
                 .kerning(-1.0)
                 .font(.largeTitle)
                 .fontWeight(.black)
@@ -40,7 +42,12 @@ struct ContentView: View {
                 "Well played!",
                 isPresented: $isAlertVisiable,//changes the state var to bining
                 actions: { },
-                message: {Text("You got \(sliderValue)!")}
+                message: {
+                    let roundedVal = Int(sliderValue.rounded())
+                    Text("""
+                            You got \(roundedVal)!
+                            And scored \(game.getScoreFromSliderVal(roundedVal))
+                            """)}
             )
         }
         
